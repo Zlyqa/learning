@@ -1,4 +1,6 @@
 <?php
+require_once 'User.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $login = htmlspecialchars($_POST["login"], ENT_QUOTES);
     $password = htmlspecialchars($_POST["password"], ENT_QUOTES);
@@ -6,7 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = htmlspecialchars($_POST["Email"], ENT_QUOTES);
         $password2 = htmlspecialchars($_POST["password2"], ENT_QUOTES);
         if ($password2 == $password) {
-            echo "Регистрация прошла успешно <br>Почта: $email <br>Логин: $login <br>Пароль: $password";
+            $userManager = new User();
+            $userManager->createUser(["email" => $email, "login" => $login, "password" => $password]);
         } else {
             echo "Пароли не совпадают";
         }
